@@ -12,7 +12,7 @@ angular.module('MassAutoComplete', [])
         '<ul class="ac-menu">' +
           '<li ng-repeat="result in results" ng-if="$index > 0" ' +
             'class="ac-menu-item" ng-class="$index == selected_index ? \'ac-state-focus\': \'\'">' +
-            '<a href ng-click="apply_selection($index, $event)" ng-bind-html="result.label"></a>' +
+            '<a href ng-click="apply_selection($index)" ng-bind-html="result.label"></a>' +
           '</li>' +
         '</ul>' +
       '</div>',
@@ -136,6 +136,8 @@ angular.module('MassAutoComplete', [])
               if (suggestions && suggestions.length > 0) {
                 $scope.results = [{ value: term, label: ''}].concat(suggestions);
                 $scope.show_autocomplete = true;
+                if (current_options.auto_select_first)
+                    set_selection(1);
               } else {
                 $scope.results = [];
               }
@@ -218,11 +220,10 @@ angular.module('MassAutoComplete', [])
           // Focus is lost when a selection is made from the auto complete menu
           // using the mouse (or touch). In that case we don't want to detach so
           // we wait several ms for the input to regain focus.
-          if (!$scope.show_autocomplete)
-            $timeout(function() {
-              if (!current_element || current_element[0] !== $document[0].activeElement)
-                that.detach();
-            }, user_options.debounce_blur);
+          $timeout(function() {
+            if (!current_element || current_element[0] !== $document[0].activeElement)
+              that.detach();
+          }, user_options.debounce_blur);
         });
 
         current_element.bind(EVENTS.KEYDOWN, function (e) {
@@ -315,14 +316,15 @@ angular.module('MassAutoComplete', [])
   return {
     restrict: "A",
     require: ["^massAutocomplete", "ngModel"],
-    scope: false,
+    scope: {'massAutocompleteItem' : "&"},
     link: function (scope, element, attrs, required) {
       // Prevent html5/browser auto completion.
       attrs.$set('autocomplete', 'off');
 
       element.bind('focus', function () {
-        var options = scope[attrs.massAutocompleteItem];
-        if (!options) throw "Invalid options";
+        var options = scope.massAutocompleteItem();
+        if (!options)
+          throw "Invalid options";
         required[0].attach(required[1], element, options);
       });
     }
