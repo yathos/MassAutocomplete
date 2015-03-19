@@ -56,7 +56,7 @@
 
     <table class="table table-bordered">
       <tr> <th> Dependencies </th> <td> Angular, Angular-Sanitize </td> </tr>
-      <tr> <th> Size </th> <td> 12.2kb, 1.65kb minified </td></tr>
+      <tr> <th> Size </th> <td> 12.2kb, 4kb minified </td></tr>
       <tr> <th> Bower </th> <td> <code> bower install angular-mass-autocomplete </code> </td> </tr>
     </table>
 
@@ -136,7 +136,7 @@ app.controller('mainCtrl', function ($scope, $sce, $q) {
 
     <h3 id="motivation"> Motivation </h3>
     <p>
-      MassAutocomplete was created as part of a new project that required auto
+      MassAutocomplete was created as part of a <a href="http://www.candidoc.com">new project</a> that required auto
       completing a lot of input fields.
     </p>
     <p>
@@ -161,17 +161,17 @@ app.controller('mainCtrl', function ($scope, $sce, $q) {
       MassAutocomplete does not provide filtering, linking, ranking or sorting.
       Generating the suggestions is left to the application.
     </p>
-  
+
     <h4> Comparing implementations </h4>
-    <p> 
+    <p>
       We performed a comparison between mass-autocomplete and the popular ui-typehead.
     </p>
     <p>
       <a href="benchmark.html"> <strong> The results are  here. </strong> </a>
     </p>
-    
+
     <hr>
-    
+
     <h3 id="examples"> Examples </h3>
       <p>
         All examples in this section are using just one <code>mass-autocomplete</code>
@@ -532,6 +532,7 @@ $scope.ac_options_users = {
           as a result of selecting from the menu until detach is invoked.
         </td>
       </tr>
+      <tr>
 
       <tr>
         <th colspan=2 class="text-center"> mass-autocomplete-item=options_name </th>
@@ -578,6 +579,10 @@ $scope.ac_options_users = {
       <tr>
         <th> on_error() </th>
         <td> Callback fired in case <code>suggest()</code> fails. </td>
+      </tr>
+      <tr>
+        <th> auto_select_first (false) </th>
+        <td> Auto select the first option in the suggetion box. </td>
       </tr>
     </table>
 
