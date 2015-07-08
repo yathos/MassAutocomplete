@@ -40,3 +40,8 @@
   outline: none;
   background-color: #e0eaff;
 }
+
+.ac-container {
+  top: 35px !important;
+  left: 15px !important;
+}
